@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"  # Pode trocar para PostgreSQL, MySQL, etc.
+  url      = "file:./dev.db"
+}
+
+model Pesquisa {
+  id            Int      @id @default(autoincrement())
+  publicoAlvo   String
+  estrelas      Int
+  email         String
+  atualizadaEm  DateTime @updatedAt
+  respostas     Resposta[]
+}
+
+model Resposta {
+  id        Int      @id @default(autoincrement())
+  conteudo  String
+  pesquisa  Pesquisa @relation(fields: [pesquisaId], references: [id])
+  pesquisaId Int
+}
